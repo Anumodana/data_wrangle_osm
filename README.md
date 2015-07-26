@@ -12,8 +12,7 @@ I've chosen Chiang Mai, Thailand dataset because I visited this province last ye
 After reviewing the dataset, I found the following main problems:
 
 - Some records do not contain "user" and "uid" attributes. I've decided to set `None` to these fields instead. So, the number of unique users that I'm going to calculate may not be accurate because we have no clue about creators of those records. Below is an example record that doesn't have "user" and "uid" attributes.
-
-    <node id="206881696" lat="18.7883551" lon="98.9853163" version="5" timestamp="2008-04-15T13:29:39Z" changeset="157228"/>
+`<node id="206881696" lat="18.7883551" lon="98.9853163" version="5" timestamp="2008-04-15T13:29:39Z" changeset="157228"/>`
 
 - Some places do not have the default name (name), English name (name:en), or any name specified. If we would like to list the name of shops or places nearby a specified location, we can't list all of them. In a case that a record doesn't contain the default name but it has the alternative names. I'll make sure that at least "name:en" is set to the "name" attribute.
 

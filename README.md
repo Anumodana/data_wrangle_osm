@@ -100,10 +100,10 @@ At first, I've tried to find hotels near the airport within 1 km but it seems th
 As I mentioned earlier about the dataset that it contains other provinces data and requires the 3rd party API, e.g. [The Google Geocoding API](https://developers.google.com/maps/documentation/geocoding/intro?csw=1), to find the city, province, or address in a case we would like to filter out unrelated data out from the chosen dataset. In my opinion, it may be a good idea if OpenStreetMap automatically fill in the missing data such as postal code, area, etc based on the latitude and longitude specified by users.
 
 ## Conclusion
-After working with this dataset, I found that the data is incomplete such as name, address, etc. So, I've cleaned some data to make sure it's ready to be analyzed. From the above excercises, it states that this dataset provides the valuable data about Chiang Mai province that can be used in the real world projects.
+After working with this dataset, I found that the data is incomplete such as name, address, etc. So, I've cleaned some data to make sure it's ready to be analyzed. From the above exercises, it states that this dataset provides the valuable data about Chiang Mai province that can be used in the real world projects.
 
 ## Files & Folder
-- data_wrangle_osm/lesson6 : Excercises in lesson 6
+- data_wrangle_osm/lesson6 : Exercises in lesson 6
 - data_wrangle_osm/data_wrangler.py : Data wrangler
 - data_wrangle_osm/analyzer.py : Data analyzer
 - data_wrangle_osm/data/chiang-mai_thailand.osm.zip : Raw data

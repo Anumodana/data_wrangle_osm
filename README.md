@@ -1,7 +1,7 @@
 # OpenStreetMap Project: Data Wrangling with MongoDB
-### Rinlapat Pusanasurapant
+#### Rinlapat Pusanasurapant
 
-*Map Area*: Chiang Mai, Thailand
+Map Area: Chiang Mai, Thailand
 
 https://s3.amazonaws.com/metro-extracts.mapzen.com/chiang-mai_thailand.osm.bz2
 https://www.openstreetmap.org/relation/1908771
@@ -11,11 +11,9 @@ I've chosen Chiang Mai, Thailand dataset because I visited this province last ye
 ## 1. Problems Encountered in the Map
 After reviewing the dataset, I found the following main problems:
 
-- Some records do not contain "user" and "uid" attributes. Below is an example record that doesn't have "user" and "uid" attributes.
+- Some records do not contain "user" and "uid" attributes. I've decided to set `None` to these fields instead. So, the number of unique users that I'm going to calculate may not be accurate because we have no clue about creators of those records. Below is an example record that doesn't have "user" and "uid" attributes.
 
     <node id="206881696" lat="18.7883551" lon="98.9853163" version="5" timestamp="2008-04-15T13:29:39Z" changeset="157228"/>
-
-I've decided to set `None` to these fields instead. So, the number of unique users that I'm going to calculate may not be accurate because we have no clue about creators of those records.
 
 - Some places do not have the default name (name), English name (name:en), or any name specified. If we would like to list the name of shops or places nearby a specified location, we can't list all of them. In a case that a record doesn't contain the default name but it has the alternative names. I'll make sure that at least "name:en" is set to the "name" attribute.
 
@@ -24,26 +22,26 @@ I've decided to set `None` to these fields instead. So, the number of unique use
 ## 2. Data Overview
 This section contains basic statistics about the dataset and the MongoDB queries used to gather them.
 
-### File sizes
-chiang-mai_thailand.osm .................. 118.9 MB
-chiang-mai_thailand.osm.json ............. 154.8 MB
+#### File sizes
+- chiang-mai_thailand.osm .................. 118.9 MB
+- chiang-mai_thailand.osm.json ............. 154.8 MB
 
-### Number of documents
+#### Number of documents
 
     > db.chiangmai.find().count()
     632174
 
-### Number of nodes
+#### Number of nodes
 
     > db.chiangmai.find({ "type": "node" }).count()
     575150
 
-### Number of ways
+#### Number of ways
 
     > db.chiangmai.find({ "type": "way" }).count()
     57024
 
-### Number of unique users
+#### Number of unique users
 
     > db.chiangmai.aggregate([
         { "$group": { "_id": "users", "unique_users": { "$addToSet": "$created.user" } } },
@@ -52,17 +50,17 @@ chiang-mai_thailand.osm.json ............. 154.8 MB
     ])
     [{u'count': 357, u'_id': u'users'}]
 
-### Number of shops in Chiang Mai
+#### Number of shops in Chiang Mai
 
     > db.chiangmai.find({ "shop": { "$exists": True } }).count()
     1710
 
-### Number of hospitals in Chiang Mai
+#### Number of hospitals in Chiang Mai
 
     > db.chiangmai.find({ "amenity": "hospital" }).count()
     76
 
-### Top 1 contributing user
+#### Top 1 contributing user
 
     > db.chiangmai.aggregate([
         { "$group": { "_id": "users", "unique_users": { "$push": "$created.user" } } },
@@ -78,7 +76,7 @@ As a tourist, I would like to find hotels near Chiang Mai international airport.
 
 To make sure that I can use geospatial in MongoDB, I've decided to restructure the way latitude and longitude are stored to follow the GeoJSON format.
 
-### List of hotels near Chiang Mai international airport within 2 km.
+#### List of hotels near Chiang Mai international airport within 2 km.
 
     > db.chiangmai.find(
         {

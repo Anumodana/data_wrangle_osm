@@ -25,10 +25,10 @@ Below is an example record that doesn't have "user" and "uid" attributes.
 
 Some of them are in Thai:
 
-    # (1) It contains the address, not only the city.
+    # (1) City attribute contains the address, not only the city.
     <tag k="addr:city" v="หมู่ 10 ตำบลแม่เหียะ อำเภอเมืองเชียงใหม่" />
     
-    # (2) It contains the village name only.
+    # (2) City attribute contains the village name only.
     <tag k="addr:city" v="หมู่บ้านเฮ้าส์แอนด์วิว" />
     <tag k="addr:street" v="ซอย 5" />
 
@@ -117,10 +117,10 @@ To make sure that I can use geospatial in MongoDB, I've decided to restructure t
 
 At first, I've tried to find hotels near the airport within 1 km but it seems there is no hotel around it. So, I've decided to change from 1 km to 2 km instead and it found only 2 hotels. From this example, it means that we can use the geospatial in MongoDB to find places nearby our current location.
 
-As I mentioned earlier about the dataset that it contains other provinces data and requires the 3rd party API, e.g. [The Google Geocoding API](https://developers.google.com/maps/documentation/geocoding/intro?csw=1), to find the city, province, or address in a case we would like to filter out unrelated data out from the chosen dataset. In my opinion, it may be a good idea if OpenStreetMap automatically fill in the missing data such as postal code, area, etc based on the latitude and longitude specified by users.
+In my opinion, it may be a good idea if OpenStreetMap automatically fills in the missing data such as postal code, area, etc based on the latitude and longitude specified by users so that it guarantees that the postal code, area, etc. will be available in the dataset. However, it's also possible that those filled in data may contain the incorrect values due to the inaccurate latitude and longitude. So, it still requires contributors or reviewers to review these values manually even though OpenStreetMap may already had the form validation that automatically validates filled in data before storing the data in the database.
 
 ## Conclusion
-After working with this dataset, I found that the data is incomplete such as name, address, etc. So, I've cleaned some data to make sure it's ready to be analyzed. From the above exercises, it states that this dataset provides the valuable data about Chiang Mai province that can be used in the real world projects.
+After working with this dataset, I found that the data is incomplete such as name, address, etc. So, I've cleaned some data to make sure it's ready to be analyzed. However, some of data can't be automatically cleaned. In some default attributes, some of them are in That but some of them are in English as discuss in section 1. It requires more contributors to review and audit the data. The contributors can be tourists or people who live in Chiang Mai so that the data is more accurate. From the above exercises, even though this dataset is incomplete but it states that this dataset still provides the valuable data about Chiang Mai province that can be used in the real world projects, for example, we can create an application that allows users to find nearby restaurants or places in Chiang Mai.
 
 ## Files & Folder
 - data_wrangle_osm/lesson6 : Exercises in lesson 6

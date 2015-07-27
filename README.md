@@ -11,19 +11,42 @@ I've chosen Chiang Mai, Thailand dataset because I visited this province last ye
 ## 1. Problems Encountered in the Map
 After reviewing the dataset, I found the following main problems:
 
-- Some records do not contain "user" and "uid" attributes. I've decided to set `None` to these fields instead. So, the number of unique users that I'm going to calculate may not be accurate because we have no clue about creators of those records. Below is an example record that doesn't have "user" and "uid" attributes.
-`<node id="206881696" lat="18.7883551" lon="98.9853163" version="5" timestamp="2008-04-15T13:29:39Z" changeset="157228"/>`
+- Some records do not contain "user" and "uid" attributes. I've decided to set `None` to these fields instead. So, the number of unique users that I'm going to calculate may not be accurate because we have no clue about creators of those records.
 
-- Some places do not have the default name (name), English name (name:en), or any name specified. If we would like to list the name of shops or places nearby a specified location, we can't list all of them. In a case that a record doesn't contain the default name but it has the alternative names. I'll make sure that at least "name:en" is set to the "name" attribute.
+Below is an example record that doesn't have "user" and "uid" attributes.
+
+    <node id="206881696" lat="18.7883551" lon="98.9853163" version="5" timestamp="2008-04-15T13:29:39Z" changeset="157228"/>
+
+- Some places do not have the default name (name), English name (name:en), or any name specified. If we would like to list the name of shops or places nearby a specified location, we can't list all of them. In a case that a record doesn't contain the default name but it has the alternative names. I'll make sure that at least "name:en" is set to the "name" attribute by using audit_default_name() in the data_wrangler.py file.
 
 - From mapzen website, "Chiang Mai, Thailand" dataset contains the data of other provinces such as Lamphun province (ลำพูน). So, those data should be filtered out so that the basic statistics about the dataset will be more accurate. However, this requires many steps and the third-party API to find the province of each record using latitude and longitude, so I'll skip it for now and assume that this dataset contains only Chiang Mai province data.
+
+- In some nodes, they contain only the default address attributes such as `addr:city` and `addr:street` attributes without any alternative language.
+
+Some of them are in Thai:
+
+    # (1) It contains the address, not only the city.
+    <tag k="addr:city" v="หมู่ 10 ตำบลแม่เหียะ อำเภอเมืองเชียงใหม่" />
+    
+    # (2) It contains the village name only.
+    <tag k="addr:city" v="หมู่บ้านเฮ้าส์แอนด์วิว" />
+    <tag k="addr:street" v="ซอย 5" />
+
+Some of them are in English:
+
+    <tag k="addr:city" v="Chiang Mai" />
+    <tag k="addr:street" v="Sermsuk Road" />
+
+So, it's very hard to clean these data automatically.
+
+- In a case that `addr:street` attribute is written in English, I found that some of them contain "Rd", "Rd.", or "Road". So, I've decided to rename "Rd" and "Rd." to "Road" by using audit_streetname() in the data_wrangler.py file. For example, "Arak Rd. Soi 3" is changed to "Arak Road Soi 3".
 
 ## 2. Data Overview
 This section contains basic statistics about the dataset and the MongoDB queries used to gather them.
 
 #### File sizes
 - chiang-mai_thailand.osm .................. 118.9 MB
-- chiang-mai_thailand.osm.json ............. 154.8 MB
+- chiang-mai_thailand.osm.json ............. 154.9 MB
 
 #### Number of documents
 

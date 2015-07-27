@@ -68,13 +68,13 @@ def add_pos(row, node):
 
 def audit_default_name(row):
     fields = row.keys()
-    if (not has_default_name(fields)) and has_alternative_name(fields):
+    if (not has_default_name(fields)) and has_english_name(fields):
         row["name"] = row["name:en"]
 
 def has_default_name(fields):
     return ("name" in fields)
 
-def has_alternative_name(fields):
+def has_english_name(fields):
     return ("name:en" in fields)
 
 def process_map(file_in, pretty = False):

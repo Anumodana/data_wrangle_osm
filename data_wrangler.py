@@ -9,10 +9,10 @@ import codecs
 import json
 
 CREATED = ["version", "changeset", "timestamp", "user", "uid"]
-ADDRESS = ["addr:housenumber", "addr:postcode", "addr:street"]
+ADDRESS = ["addr:housenumber", "addr:postcode", "addr:street", "addr:city", "addr:district", "addr:province", "addr:subdistrict"]
 GENERAL = ["amenity", "shop", "tourism", "name", "name:en"]
 
-house_number_re = re.compile(r'(^\d+)(/\d*)')
+STREETNAME_MAPPING = { "Rd": "Road", "Rd.": "Road" }
 
 def shape_element(element):
     node = {}
@@ -77,6 +77,11 @@ def has_default_name(fields):
 def has_english_name(fields):
     return ("name:en" in fields)
 
+def audit_streetname(row):
+    if "address" in row.keys() and "street" in row["address"].keys():
+        for k, v in STREETNAME_MAPPING.iteritems():
+            row["address"]["street"] = re.sub(" "+k+"(\.?)", " "+v, row["address"]["street"])
+
 def process_map(file_in, pretty = False):
     file_out = "{0}.json".format(file_in)
     data = []
@@ -84,7 +89,9 @@ def process_map(file_in, pretty = False):
         for _, element in ET.iterparse(file_in):
             el = shape_element(element)
             if el:
-                data.append(audit_default_name(el))
+                audit_default_name(el)
+                audit_streetname(el)
+                data.append(el)
                 if pretty:
                     fo.write(json.dumps(el, indent=2)+"\n")
                 else:

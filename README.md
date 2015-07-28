@@ -6,7 +6,7 @@ Map Area: Chiang Mai, Thailand
 https://s3.amazonaws.com/metro-extracts.mapzen.com/chiang-mai_thailand.osm.bz2
 https://www.openstreetmap.org/relation/1908771
 
-I've chosen Chiang Mai, Thailand dataset because I visited this province last year and it's a very popular province that everyone including Thais and forigners would like to visit. So, this dataset should contain a lot of shops, cafes, hotels, and places that are benefit for doing data analysis.
+I've chosen Chiang Mai, Thailand dataset because I visited this province last year and it's a very popular province that everyone including Thais and foreigners would like to visit. So, this dataset should contain a lot of shops, cafes, hotels, and places that are benefit for doing data analysis.
 
 ## 1. Problems Encountered in the Map
 After reviewing the dataset, I found the following main problems:
@@ -123,12 +123,13 @@ In my opinion, it may be a good idea if OpenStreetMap automatically fills in the
 After working with this dataset, I found that the data is incomplete such as name, address, etc. So, I've cleaned some data to make sure it's ready to be analyzed. However, some of data can't be automatically cleaned. In some default attributes, some of them are in That but some of them are in English as discuss in section 1. It requires more contributors to review and audit the data. The contributors can be tourists or people who live in Chiang Mai so that the data is more accurate. From the above exercises, even though this dataset is incomplete but it states that this dataset still provides the valuable data about Chiang Mai province that can be used in the real world projects, for example, we can create an application that allows users to find nearby restaurants or places in Chiang Mai.
 
 ## Files & Folder
-- data_wrangle_osm/lesson6 : Exercises in lesson 6
-- data_wrangle_osm/data_wrangler.py : Data wrangler
-- data_wrangle_osm/analyzer.py : Data analyzer
-- data_wrangle_osm/data/chiang-mai_thailand.osm.zip : Raw data
-- data_wrangle_osm/data/chiang-mai_thailand.osm.json.zip : Cleaned data
-- data_wrangle_osm/data/sample.osm : Sample file of chiang-mai_thailand.osm
+- data_wrangle_osm/lesson6 : Exercises in lesson 6.
+- data_wrangle_osm/data_wrangler.py : Data wrangler.
+- data_wrangle_osm/analyzer.py : Data analyzer.
+- data_wrangle_osm/data/chiang-mai_thailand.osm.zip : Raw data.
+- data_wrangle_osm/data/chiang-mai_thailand.osm.json.zip : Cleaned data.
+- data_wrangle_osm/data/sample.osm : Sample file of chiang-mai_thailand.osm.
+- OpenStreetMapProject.pdf : Documentation about this project.
 
 ## References
 http://docs.mongodb.org/manual/
